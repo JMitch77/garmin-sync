@@ -1,0 +1,28 @@
+# Place at .github/workflows/garmin.yml in your repo.
+name: Garmin sync
+on:
+  schedule:
+    - cron: '0 6 * * *'   # ~07:00 UK daily
+  workflow_dispatch:        # run manually from the Actions tab
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install garminconnect
+      - name: Fetch Garmin data
+        env:
+          GARMIN_TOKENS: ${{ secrets.GARMIN_TOKENS }}
+        run: python fetch_garmin.py
+      - name: Commit garmin.json
+        run: |
+          git config user.name "garmin-bot"
+          git config user.email "garmin-bot@users.noreply.github.com"
+          git add garmin.json
+          git commit -m "update garmin.json" || echo "no changes"
+          git push
