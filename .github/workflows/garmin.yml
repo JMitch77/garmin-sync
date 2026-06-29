@@ -2,7 +2,7 @@
 name: Garmin sync
 on:
   schedule:
-    - cron: '0 6 * * *'   # ~07:00 UK daily
+    - cron: '0 6 * * *'   # 06:00 UTC = 07:00 UK in summer (BST)
   workflow_dispatch:        # run manually from the Actions tab
 permissions:
   contents: write
@@ -24,5 +24,9 @@ jobs:
           git config user.name "garmin-bot"
           git config user.email "garmin-bot@users.noreply.github.com"
           git add garmin.json
-          git commit -m "update garmin.json" || echo "no changes"
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "update garmin.json"
+          git push origin HEAD:${{ github.ref_name }}
