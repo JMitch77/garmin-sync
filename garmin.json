@@ -1,11 +1,11 @@
 {
-  "date": "2026-06-29",
-  "sleepHours": 6.3,
-  "sleepScore": 75,
-  "hrv": 41,
+  "date": "2026-06-30",
+  "sleepHours": 5.6,
+  "sleepScore": 71,
+  "hrv": 40,
   "hrvStatus": "Balanced",
-  "steps": 172,
-  "caloriesActive": 7.0,
-  "restingHr": 55,
-  "bodyBattery": 63
+  "steps": 207,
+  "caloriesActive": 9.0,
+  "restingHr": 56,
+  "bodyBattery": 77
 }
